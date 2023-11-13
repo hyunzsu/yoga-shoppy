@@ -3,22 +3,14 @@ import { Link } from 'react-router-dom';
 import { FiShoppingBag } from 'react-icons/fi';
 import { BsFillPencilFill } from 'react-icons/bs';
 import { login, logout, onUserStateChange } from '../api/firebase';
+import User from './User';
 
 export default function Navbar() {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    onUserStateChange((user) => {
-      console.log(user);
-      setUser(user);
-    });
+    onUserStateChange(setUser); // 인자 동일하므로 참조값만 전달
   }, []);
-  const handleLogin = () => {
-    login().then(setUser);
-  };
-  const handleLogout = () => {
-    logout().then(setUser);
-  };
 
   return (
     <div>
@@ -33,12 +25,11 @@ export default function Navbar() {
           <Link to='/products/new' className='text-2xl'>
             <BsFillPencilFill />
           </Link>
-          {!user && <button onClick={handleLogin}>Login</button>}
-          {user && <button onClick={handleLogout}>Logout</button>}
+          {user && <User user={user} />}
+          {!user && <button onClick={login}>Login</button>}
+          {user && <button onClick={logout}>Logout</button>}
         </nav>
       </header>
     </div>
   );
 }
-
-// (user) => setUser(user) 매개변수와 인자가 같은 경우 생략 가능 setUser

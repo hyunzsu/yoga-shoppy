@@ -19,19 +19,13 @@ const auth = getAuth(firebaseApp);
 const provider = new GoogleAuthProvider();
 
 /* 로그인 */
-export async function login() {
-  return signInWithPopup(auth, provider)
-    .then((result) => {
-      const user = result.user;
-      console.log(user);
-      return user;
-    })
-    .catch(console.error);
+export function login() {
+  signInWithPopup(auth, provider).catch(console.error);
 }
 
 /* 로그아웃 */
-export async function logout() {
-  return signOut(auth).then(() => null);
+export function logout() {
+  signOut(auth).catch(console.error);
 }
 
 /* 로그인 세션 정보 유지 */
@@ -40,3 +34,6 @@ export function onUserStateChange(callback) {
     callback(user);
   });
 }
+
+// 로그인, 로그아웃 결과를 굳이 외부로 리턴하지 않아도 됨
+// 결과에 관심있는 컴포넌트가 있다면 onUserStateChange을 이용해서 결과값을 들음
