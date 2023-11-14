@@ -9,7 +9,10 @@ export default function Navbar() {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    onUserStateChange(setUser); // 인자 동일하므로 참조값만 전달
+    onUserStateChange((user) => {
+      console.log(user);
+      setUser(user);
+    });
   }, []);
 
   return (
