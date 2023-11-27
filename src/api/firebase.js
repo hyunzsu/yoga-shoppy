@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app';
+import { v4 as uuid } from 'uuid';
 import {
   getAuth,
   GoogleAuthProvider,
@@ -6,7 +7,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
-import { getDatabase, ref, child, get } from 'firebase/database';
+import { getDatabase, ref, get, set } from 'firebase/database';
 
 /* Firebase 초기화 */
 const firebaseConfig = {
@@ -58,4 +59,17 @@ async function adminUser(user) {
     });
 }
 
-// 사용자를 전달 받아서 인자로 주어진 사용자가 어드민 권한을 가지고있는지 확인 후 객체를 리턴
+/* 파이어베이스에 새로운 제품 등록 */
+export async function addNewProduct(product, imageUrl) {
+  // 고유한 ID 생성
+  const id = uuid();
+
+  // 파이어베이스의 'products' 경로에 새로운 제품 정보를 등록
+  set(ref(database, `products/${uuid()}`), {
+    ...product, // 기존의 받아온 product에 있는 모든 key와 value를 복사해옴
+    id, // 생성한 고유 ID를 추가
+    price: parseInt(product.price), // 제품 가격을 정수형으로 변환하여 등록
+    image: imageUrl, // 'image'라는 key에 전달받은 imageUrl을 등록
+    options: product.options.split(','), // 콤마(,)로 구분된 문자열을 배열로 변환하여 등록
+  });
+}
