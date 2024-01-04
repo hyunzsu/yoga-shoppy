@@ -65,7 +65,7 @@ export async function addNewProduct(product, imageUrl) {
   const id = uuid();
 
   // 파이어베이스의 'products' 경로에 새로운 제품 정보를 등록
-  set(ref(database, `products/${uuid()}`), {
+  return set(ref(database, `products/${uuid()}`), {
     ...product, // 기존의 받아온 product에 있는 모든 key와 value를 복사해옴
     id, // 생성한 고유 ID를 추가
     price: parseInt(product.price), // 제품 가격을 정수형으로 변환하여 등록
