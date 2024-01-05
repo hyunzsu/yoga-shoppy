@@ -6,8 +6,8 @@ import { addNewProduct } from '../api/firebase';
 export default function NewProduct() {
   const [product, setProduct] = useState({}); // 제품 정보 관리 -> 사용자가 입력한 데이터
   const [file, setFile] = useState(); // 파일 상태 관리 -> 파일은 따로 관리해야 함
-  const [isUploading, setIsUploading] = useState(false);
-  const [success, setSuccess] = useState();
+  const [isUploading, setIsUploading] = useState(false); // 업로드 진행 여부
+  const [success, setSuccess] = useState(); // 성공 메시지
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;

@@ -73,3 +73,14 @@ export async function addNewProduct(product, imageUrl) {
     options: product.options.split(','), // 콤마(,)로 구분된 문자열을 배열로 변환하여 등록
   });
 }
+
+/* 제품 목록 가져오기 */
+export async function getProducts() {
+  return get(ref(database, 'products')) //
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        return Object.values(snapshot.val()); // value 들만 가져옴
+      }
+      return [];
+    });
+}
