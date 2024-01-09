@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Button from '../components/ui/Button';
+import { useAuthContext } from '../context/AuthContext';
+import { addOrUpdateToCart } from '../api/firebase';
 
 export default function ProductDetail() {
+  const {
+    user: { uid },
+  } = useAuthContext(); // 사용자 id를 낱개로 가져옴
   const {
     state: {
       product: { id, image, title, description, category, price, options },
@@ -13,6 +18,9 @@ export default function ProductDetail() {
   const handleSelect = (e) => setSelected(e.target.value);
   const handleClick = (e) => {
     // 여기서 장바구니에 추가하면 됨!
+    // 사용자 id와 제품에 대한 정보 필요, 후에 파이어베이스 함수 호출
+    const product = { id, image, title, price, option: selected, quantity: 1 };
+    addOrUpdateToCart(uid, product);
   };
 
   return (
