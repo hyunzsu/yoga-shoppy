@@ -19,7 +19,9 @@ export function AuthContextProvider({ children }) {
   /* AuthContext.Provider 컴포넌트 반환 */
   return (
     // value prop으로 현재 사용자 정보 및 로그인, 로그아웃 함수를 제공
-    <AuthContext.Provider value={{ user, login, logout: logout }}>
+    <AuthContext.Provider
+      value={{ user, uid: user && user.uid, login, logout: logout }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -29,3 +31,5 @@ export function AuthContextProvider({ children }) {
 export function useAuthContext() {
   return useContext(AuthContext);
 }
+
+// user가 있다면 uid 도 낱개로 펼쳐서 전달해줌

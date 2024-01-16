@@ -5,9 +5,7 @@ import { useAuthContext } from '../context/AuthContext';
 import { addOrUpdateToCart } from '../api/firebase';
 
 export default function ProductDetail() {
-  const {
-    user: { uid },
-  } = useAuthContext(); // 사용자 id를 낱개로 가져옴
+  const { uid } = useAuthContext(); // 사용자 id를 낱개로 가져옴
   const {
     state: {
       product: { id, image, title, description, category, price, options },
